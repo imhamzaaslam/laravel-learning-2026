@@ -24,8 +24,14 @@
                                 href="/php-project-management-course">Dashboard</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/php-project-management-course/add_user_form.php">Users</a>
+                            <a class="nav-link" href="{{ route('users.list') }}">Users</a>
                         </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('tasks.list') }}">Tasks</a>
+                        </li>
+
+                        
 
                       
 

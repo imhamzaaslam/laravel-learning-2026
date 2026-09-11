@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DashboardController;
-
+use App\Http\Controllers\TaskController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -18,4 +18,6 @@ Route::get('contact', function () {
 
 Route::get('dashboard', DashboardController::class . '@index');
 
-Route::get('users', UserController::class . '@usersList');
+Route::get('users', UserController::class . '@usersList')->name('users.list');
+Route::get('tasks', TaskController::class . '@taskList')->name('tasks.list');
+Route::get('tasks/{id}', TaskController::class . '@show')->name('tasks.details');
