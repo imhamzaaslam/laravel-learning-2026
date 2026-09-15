@@ -19,5 +19,6 @@ Route::get('contact', function () {
 Route::get('dashboard', DashboardController::class . '@index');
 
 Route::get('users', UserController::class . '@usersList')->name('users.list');
+Route::get('users/create', UserController::class . '@create')->name('users.create');
 Route::get('tasks', TaskController::class . '@taskList')->name('tasks.list');
 Route::get('tasks/{id}', TaskController::class . '@show')->name('tasks.details');

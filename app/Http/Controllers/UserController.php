@@ -13,7 +13,7 @@ class UserController extends Controller
         return view("users.list", compact('users'));
     }
 
-    public function deleteUser(){
-        
+    public function create(){
+        return view("users.create");
     }
 }
