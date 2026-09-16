@@ -13,7 +13,7 @@
                         <div>
                             <p><Strong>Title:</Strong> {{ $task->title }}</p>
                             <p><Strong>Description:</Strong> {{ $task->description }}</p>
-                            <p><Strong>Due Date:</Strong> {{ $task->due_date->format('d/M/Y') }}</p>
+                            <p><Strong>Due Date:</Strong> {{ $task->due_date?->format('d/M/Y') }}</p>
                             <p><Strong>Estimated Time:</Strong> {{ $task->estimated_time }}</p>
                             <p><Strong>Created At:</Strong> {{ $task->created_at->format('d/M/Y H:i:s') }}</p>
 

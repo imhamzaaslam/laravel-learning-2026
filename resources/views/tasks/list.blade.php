@@ -7,29 +7,23 @@
             <div class="container  py-5">
                 <div class="row justify-content-center">
                     <div class="col-lg-8">
-                        
+
                         <h1 class="display-4 fw-bold mb-4">Tasks</h1>
+                        <p><a href="{{ route('tasks.create') }}" class="btn btn-info">+ Add New Task</a></p>
                         <hr>
                         <table class="table table-striped">
                             <thead>
                                 <tr>
                                     <th>Title</th>
+                                    <th>Assigned To</th>
                                     <th>Due Date</th>
                                     <th>Estimated Time</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                @foreach($tasks as $task)
-                                    <tr>
-                                        <td>{{ $task->title }}</td>
-                                        <td>{{ $task->due_date->format('d/M/Y') }}</td>
-                                        <td>{{ $task->estimated_time }}</td>
-                                        <td>
-                                            <a href="{{ route('tasks.details', ['id' => $task->id]) }}" class="btn btn-primary">View Details</a>
-                                        </td>
-                                    </tr>
-                                @endforeach
+                            <tbody id="tasks-table-body">
+                                <!-- Task rows will be dynamically inserted here -->
+
                             </tbody>
                         </table>
                     </div>
@@ -37,4 +31,39 @@
             </div>
         </section>
     </main>
+@endsection
+
+@section('scripts')
+    <script>
+        $(document).ready(function() {
+            // Fetch tasks from the API
+            $.ajax({
+                url: '/api/tasks',
+                method: 'GET',
+                success: function(tasks) {
+                    // Populate the table with task data
+                    const tbody = $('#tasks-table-body');
+                    tbody.empty(); // Clear existing rows
+
+                    tasks.forEach(task => {
+                        const row = `
+                            <tr>
+                                <td>${task.title}</td>
+                                <td class="${task.user?.name??'text-danger'}">${task.user?.name??'Unassigned'}</td>
+                                <td>${task.due_date ?? ''}</td>
+                                <td>${task.estimated_time ?? ''}</td>
+                                <td>
+                                    <a href="/tasks/${task.id}" class="btn btn-sm btn-primary">View Details</a>
+                                </td>
+                            </tr>
+                        `;
+                        tbody.append(row);
+                    });
+                },
+                error: function(error) {
+                    console.error('Error fetching tasks:', error);
+                }
+            });
+        });
+    </script>
 @endsection
