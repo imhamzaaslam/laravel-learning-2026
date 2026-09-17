@@ -26,4 +26,12 @@ class TaskController extends Controller
         $task = Task::find($id);
         return view('tasks.details', compact('task'));
     }
+    
+    
+    public function edit($id)
+    {
+        $task = Task::find($id);
+        $users = \App\Models\User::orderby('name')->get();
+        return view('tasks.edit', compact('task', 'users'));
+    }
 }

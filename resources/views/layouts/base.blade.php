@@ -20,15 +20,14 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto align-items-center">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page"
-                                href="/php-project-management-course">Dashboard</a>
+                            <a class="nav-link {{ Request::is('dashboard') ? 'active' : '' }}" href="{{ route('dashboard') }}">Dashboard</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('users.list') }}">Users</a>
+                            <a class="nav-link {{ Request::is('users*') ? 'active' : '' }}" href="{{ route('users.list') }}">Users</a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('tasks.list') }}">Tasks</a>
+                            <a class="nav-link {{ Request::is('tasks*') ? 'active' : '' }}" href="{{ route('tasks.list') }}">Tasks</a>
                         </li>
 
                         

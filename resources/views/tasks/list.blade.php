@@ -53,7 +53,9 @@
                                 <td>${task.due_date ?? ''}</td>
                                 <td>${task.estimated_time ?? ''}</td>
                                 <td>
-                                    <a href="/tasks/${task.id}" class="btn btn-sm btn-primary">View Details</a>
+                                    <a href="/tasks/${task.id}" class="btn btn-sm btn-primary btn-sm">View Details</a>
+
+                                    <a href="/tasks/${task.id}/edit" class="btn btn-sm btn-secondary btn-sm">Edit</a>
                                 </td>
                             </tr>
                         `;

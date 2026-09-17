@@ -9,12 +9,14 @@ use Illuminate\Support\Str;
 
 class TasksController extends Controller
 {
-    public function index(){
+    public function index()
+    {
         $tasks = Task::with('user')->get();
         return response()->json($tasks);
     }
 
-    public function store(Request $request){
+    public function store(Request $request)
+    {
 
         $request->validate([
             'title' => 'required|string|max:255',
@@ -23,15 +25,22 @@ class TasksController extends Controller
             'due_date' => 'nullable|date',
             'estimated_time' => 'nullable|string|max:255',
         ]);
-        
-        Task::create([
-            'uuid' => Str::uuid(),
-            'title' => $request->title,
-            'user_id' => $request->user_id,
-            'description' => $request->description,
-            'due_date' => $request->due_date,
-            'estimated_time' => $request->estimated_time,
-        ]);
+
+        $taskRequestData = [
+                'title' => $request->title,
+                'user_id' => $request->user_id,
+                'description' => $request->description,
+                'due_date' => $request->due_date,
+                'estimated_time' => $request->estimated_time,
+        ];
+
+        if ($request->has('task_id')) {
+            $taskId = $request->input('task_id');
+            Task::where('id', $taskId)->update($taskRequestData);
+        } else {
+            $taskRequestData['uuid'] = Str::uuid();
+            Task::create($taskRequestData);
+        }
 
         return response()->json(['message' => 'Task created successfully']);
     }

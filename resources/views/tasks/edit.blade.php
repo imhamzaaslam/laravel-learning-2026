@@ -7,10 +7,10 @@
                 <div class="row justify-content-center">
                     <div class="col-lg-8">
 
-                        <h1 class="display-4 fw-bold mb-4">Create Task</h1>
+                        <h1 class="display-4 fw-bold mb-4">Edit Task</h1>
                         <p><a href="{{ route('tasks.list') }}" class="btn btn-info">&larr; Back to Tasks</a></p>
                         <hr>
-                        @include('tasks._shared.task_form', compact('users'))
+                        @include('tasks._shared.task_form', compact('users', 'task'))
                     </div>
                 </div>
             </div>
@@ -23,6 +23,7 @@
         $('#create-task-form').on('submit', function(e) {
             e.preventDefault();
 
+            const task_id = $('#task-id').val();
             const title = $('#title').val();
             const user_id = $('#user_id').val();
             const description = $('#description').val();
@@ -33,6 +34,7 @@
                 url: '/api/tasks',
                 method: 'POST',
                 data: {
+                    task_id,
                     title,
                     description,
                     due_date,
@@ -48,7 +50,8 @@
                     var errors = error.responseJSON.errors;
                     var errorHtml = '<ul class="list-group">';
                     $.each(errors, function(key, value) {
-                        errorHtml += '<li class="list-group-item list-group-item-danger">' + value[0] + '</li>';
+                        errorHtml += '<li class="list-group-item list-group-item-danger">' +
+                            value[0] + '</li>';
                     });
                     errorHtml += '</ul>';
                     $('#form-errors').html(errorHtml);
