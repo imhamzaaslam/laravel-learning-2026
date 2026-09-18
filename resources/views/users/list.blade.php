@@ -16,6 +16,7 @@
                                 <tr>
                                     <th>Name</th>
                                     <th>Email</th>
+                                    <th>Tasks Assigned</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
@@ -38,7 +39,8 @@
             $.ajax({
                 url: '/api/users',
                 method: 'GET',
-                success: function(users) {
+                success: function(response) {
+                    var users = response.data;
                     // Populate the table with user data
                     const tbody = $('#users-table-body');
                     tbody.empty(); // Clear existing rows
@@ -48,6 +50,7 @@
                             <tr>
                                 <td>${user.name}</td>
                                 <td>${user.email}</td>
+                                <td>${user.num_of_tasks}</td>
                                 <td>
                                     <a href="/users/${user.id}/edit" class="btn btn-sm btn-primary">Edit</a>
                                     <a href="/users/${user.id}/delete" class="btn btn-sm btn-danger">Delete</a>

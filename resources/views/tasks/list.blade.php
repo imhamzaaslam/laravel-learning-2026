@@ -11,7 +11,7 @@
                         <h1 class="display-4 fw-bold mb-4">Tasks</h1>
                         <p><a href="{{ route('tasks.create') }}" class="btn btn-info">+ Add New Task</a></p>
                         <hr>
-                        <table class="table table-striped">
+                        <table class="table table-hover">
                             <thead>
                                 <tr>
                                     <th>Title</th>
@@ -56,6 +56,8 @@
                                     <a href="/tasks/${task.id}" class="btn btn-sm btn-primary btn-sm">View Details</a>
 
                                     <a href="/tasks/${task.id}/edit" class="btn btn-sm btn-secondary btn-sm">Edit</a>
+
+                                    <button class="btn btn-sm btn-danger btn-sm" onclick="deleteTask(${task.id})">Delete</button>
                                 </td>
                             </tr>
                         `;
@@ -67,5 +69,20 @@
                 }
             });
         });
+
+        function deleteTask(taskId) {
+            if (confirm('Are you sure you want to delete this task?')) {
+                $.ajax({
+                    url: `/api/tasks/${taskId}`,
+                    method: 'DELETE',
+                    success: function() {
+                        window.location.reload();
+                    },
+                    error: function(error) {
+                        console.error('Error deleting task:', error);
+                    }
+                });
+            }
+        }
     </script>
 @endsection
