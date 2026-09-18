@@ -33,4 +33,9 @@ class UsersController extends Controller
         ]);
         return response()->json(['message' => 'User created successfully']);
     }
+
+    function show($id){
+        $user = User::find($id);
+        return UserResource::make($user);   
+    }
 }
