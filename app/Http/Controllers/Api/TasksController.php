@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\TaskResource;
 use Illuminate\Http\Request;
 use App\Models\Task;
 use Illuminate\Support\Str;
@@ -12,7 +13,7 @@ class TasksController extends Controller
     public function index()
     {
         $tasks = Task::with('user')->get();
-        return response()->json($tasks);
+        return TaskResource::collection($tasks);
     }
 
     public function store(Request $request)
@@ -24,6 +25,8 @@ class TasksController extends Controller
             'description' => 'nullable|string',
             'due_date' => 'nullable|date',
             'estimated_time' => 'nullable|string|max:255',
+            'attachments' => 'nullable|array',
+            'attachments.*' => 'file|max:2048|mimes:jpg,jpeg,png,pdf,doc,docx,xls,xlsx',
         ]);
 
         $taskRequestData = [
@@ -36,10 +39,25 @@ class TasksController extends Controller
 
         if ($request->has('task_id')) {
             $taskId = $request->input('task_id');
-            Task::where('id', $taskId)->update($taskRequestData);
+            $task = Task::findOrFail($taskId);
+            $task->update($taskRequestData);
         } else {
             $taskRequestData['uuid'] = Str::uuid();
-            Task::create($taskRequestData);
+            $task = Task::create($taskRequestData);
+        }
+
+        // Handle attachments if provided
+        if ($request->hasFile('attachments')) {
+            $taskId = $task->id;
+            foreach ($request->file('attachments') as $attachment) {
+                $path = $attachment->store('attachments', 'public');
+                $task->attachments()->create([
+                    'path' => $path,
+                    'name' => $attachment->getClientOriginalName(),
+                    'type' => $attachment->getClientMimeType(),
+                    'size' => $attachment->getSize(),
+                ]);
+            }
         }
 
         return response()->json(['message' => 'Task created successfully']);

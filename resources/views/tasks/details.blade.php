@@ -17,6 +17,10 @@
                             <p><Strong>Estimated Time:</Strong> {{ $task->estimated_time }}</p>
                             <p><Strong>Created At:</Strong> {{ $task->created_at->format('d/M/Y H:i:s') }}</p>
 
+                            <p>
+                                @include('tasks._shared._attachments', compact('task'))
+                            </p>
+
                             <a  href="{{ route('tasks.list') }}" class="btn btn-secondary">Back to Task List</a>
                         </div>
                     </div>
