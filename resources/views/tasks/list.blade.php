@@ -6,18 +6,19 @@
             >
             <div class="container  py-5">
                 <div class="row justify-content-center">
-                    <div class="col-lg-8">
+                    <div class="col-lg-12">
 
                         <h1 class="display-4 fw-bold mb-4">Tasks</h1>
                         <p><a href="{{ route('tasks.create') }}" class="btn btn-info">+ Add New Task</a></p>
                         <hr>
-                        <table class="table table-striped">
+                        <table class="table table-hover">
                             <thead>
                                 <tr>
                                     <th>Title</th>
                                     <th>Assigned To</th>
                                     <th>Due Date</th>
                                     <th>Estimated Time</th>
+                                    <th>Created At</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
@@ -40,7 +41,8 @@
             $.ajax({
                 url: '/api/tasks',
                 method: 'GET',
-                success: function(tasks) {
+                success: function(response) {
+                    var tasks = response.data;
                     // Populate the table with task data
                     const tbody = $('#tasks-table-body');
                     tbody.empty(); // Clear existing rows
@@ -52,10 +54,13 @@
                                 <td class="${task.user?.name??'text-danger'}">${task.user?.name??'Unassigned'}</td>
                                 <td>${task.due_date ?? ''}</td>
                                 <td>${task.estimated_time ?? ''}</td>
+                                <td>${task.created_at ?? ''}</td>
                                 <td>
-                                    <a href="/tasks/${task.id}" class="btn btn-sm btn-primary btn-sm">View Details</a>
+                                    <a href="/tasks/${task.id}" class="btn btn-sm btn-primary btn-sm">Details</a>
 
                                     <a href="/tasks/${task.id}/edit" class="btn btn-sm btn-secondary btn-sm">Edit</a>
+
+                                    <button class="btn btn-sm btn-danger btn-sm" onclick="deleteTask(${task.id})">Delete</button>
                                 </td>
                             </tr>
                         `;
@@ -67,5 +72,20 @@
                 }
             });
         });
+
+        function deleteTask(taskId) {
+            if (confirm('Are you sure you want to delete this task?')) {
+                $.ajax({
+                    url: `/api/tasks/${taskId}`,
+                    method: 'DELETE',
+                    success: function() {
+                        window.location.reload();
+                    },
+                    error: function(error) {
+                        console.error('Error deleting task:', error);
+                    }
+                });
+            }
+        }
     </script>
 @endsection

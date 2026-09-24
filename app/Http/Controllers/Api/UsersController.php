@@ -5,12 +5,14 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Http\Resources\UserResource;
 
 class UsersController extends Controller
 {
     public function index(){
-        $users = User::all();
-        return response()->json($users);
+        $users = User::with('tasks')->get();
+
+        return UserResource::collection($users);
     }
 
     public function store(Request $request){
@@ -30,5 +32,10 @@ class UsersController extends Controller
             'password' => $password
         ]);
         return response()->json(['message' => 'User created successfully']);
+    }
+
+    function show($id){
+        $user = User::find($id);
+        return UserResource::make($user);   
     }
 }
