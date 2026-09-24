@@ -30,9 +30,9 @@
                             <a class="nav-link {{ Request::is('tasks*') ? 'active' : '' }}" href="{{ route('tasks.list') }}">Tasks</a>
                         </li>
 
-                        
 
-                      
+
+
 
 
                         <li class="nav-item">
@@ -74,7 +74,7 @@
             </div>
         </nav>
     </header>
-    
+
     @yield('content')
 
     <footer class="py-4 bg-dark text-white">
