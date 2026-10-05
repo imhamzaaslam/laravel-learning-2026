@@ -13,6 +13,7 @@ class Task extends Model
         'title',
         'user_id',
         'description',
+        'status',
         'due_date',
         'estimated_time',
     ];
@@ -21,11 +22,13 @@ class Task extends Model
         'due_date' => 'date',
     ];
 
-    public function user(){
-        return $this->belongsTo(User::class );
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 
-    public function attachments(){
+    public function attachments()
+    {
         return $this->hasMany(TaskAttachment::class);
     }
 }

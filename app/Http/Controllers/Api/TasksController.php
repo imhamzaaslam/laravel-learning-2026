@@ -10,9 +10,15 @@ use Illuminate\Support\Str;
 
 class TasksController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $tasks = Task::with('user')->get();
+        $query = Task::with('user');
+
+        if ($request->has('filter') && $request->input('filter') === 'overdue') {
+            $query->where('due_date', '<', now())->where('status', '!=', 'completed');
+        }
+
+        $tasks = $query->get();
         return TaskResource::collection($tasks);
     }
 
@@ -22,6 +28,7 @@ class TasksController extends Controller
         $request->validate([
             'title' => 'required|string|max:255',
             'user_id' => 'nullable|integer|exists:users,id',
+            'status' => 'sometimes|required|in:pending,in_progress,completed',
             'description' => 'nullable|string',
             'due_date' => 'nullable|date',
             'estimated_time' => 'nullable|string|max:255',
@@ -30,12 +37,16 @@ class TasksController extends Controller
         ]);
 
         $taskRequestData = [
-                'title' => $request->title,
-                'user_id' => $request->user_id,
-                'description' => $request->description,
-                'due_date' => $request->due_date,
-                'estimated_time' => $request->estimated_time,
+            'title' => $request->title,
+            'user_id' => $request->user_id,
+            'description' => $request->description,
+            'due_date' => $request->due_date,
+            'estimated_time' => $request->estimated_time,
         ];
+
+        if ($request->has('status')) {
+            $taskRequestData['status'] = $request->input('status');
+        }
 
         if ($request->has('task_id')) {
             $taskId = $request->input('task_id');
@@ -63,8 +74,9 @@ class TasksController extends Controller
         return response()->json(['message' => 'Task created successfully']);
     }
 
-    public function destroy($id){
-        
+    public function destroy($id)
+    {
+
         $task = Task::find($id);
         if (!$task) {
             return response()->json(['message' => 'Task not found'], 404);

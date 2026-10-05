@@ -1,0 +1,124 @@
+.dashboard-page {
+    min-height: 70vh;
+    padding: 42px 0 56px;
+    background: #f4f6f8;
+    color: #202a35;
+}
+
+.dashboard-title {
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: 0;
+}
+
+.dashboard-subtitle {
+    color: #687582;
+}
+
+.dashboard-stat,
+.dashboard-panel {
+    height: 100%;
+    border: 1px solid #e1e6eb;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(30, 42, 54, 0.04);
+}
+
+.dashboard-stat {
+    padding: 18px 20px;
+    border-top: 3px solid var(--stat-accent);
+}
+
+.dashboard-stat-label {
+    margin-bottom: 10px;
+    color: #687582;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.dashboard-stat-value {
+    margin: 0;
+    color: #202a35;
+    font-size: 1.8rem;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.dashboard-panel-heading {
+    padding: 18px 20px;
+    border-bottom: 1px solid #e8ecef;
+}
+
+.dashboard-panel-heading h2 {
+    margin: 0;
+    font-size: 1.05rem;
+    font-weight: 700;
+}
+
+.dashboard-table th {
+    color: #687582;
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.dashboard-table td,
+.dashboard-table th {
+    padding: 14px 18px;
+    vertical-align: middle;
+}
+
+.dashboard-table tbody tr:last-child td {
+    border-bottom: 0;
+}
+
+.dashboard-status {
+    display: inline-block;
+    padding: 5px 9px;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.dashboard-status-pending {
+    background: #fff3d6;
+    color: #805600;
+}
+
+.dashboard-status-in-progress {
+    background: #e2efff;
+    color: #15569a;
+}
+
+.dashboard-status-completed {
+    background: #ddf3e8;
+    color: #17633d;
+}
+
+.dashboard-status-overdue {
+    background: #fde5e2;
+    color: #9c3028;
+}
+
+.dashboard-empty {
+    padding: 44px 20px;
+    color: #687582;
+    text-align: center;
+}
+
+.dashboard-people-count {
+    font-size: 2.25rem;
+    font-weight: 700;
+    line-height: 1;
+}
+
+@media (max-width: 575.98px) {
+    .dashboard-page {
+        padding-top: 28px;
+    }
+
+    .dashboard-title {
+        font-size: 1.65rem;
+    }
+}

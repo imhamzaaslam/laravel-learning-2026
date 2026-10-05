@@ -9,6 +9,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/login', function () {
+    return view('login');
+});
+
 
 Route::get('user_details', UserController::class . '@userDetails');
 
@@ -16,7 +20,7 @@ Route::get('contact', function () {
     exit("contact page");
 });
 
-Route::get('dashboard', DashboardController::class . '@index')->name('dashboard');
+Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
 Route::get('users', UserController::class . '@usersList')->name('users.list');
 Route::get('users/create', UserController::class . '@create')->name('users.create');
@@ -25,3 +29,4 @@ Route::get('tasks/create', TaskController::class . '@create')->name('tasks.creat
 Route::get('tasks/{id}', TaskController::class . '@show')->name('tasks.details');
 Route::get('tasks/{id}/edit', TaskController::class . '@edit')->name('tasks.edit');
 
+Route::get('users/{user}/tasks', UserController::class . '@assignedTasks')->name('users.assigned-tasks');

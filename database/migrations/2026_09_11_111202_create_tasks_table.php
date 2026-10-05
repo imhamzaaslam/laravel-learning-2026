@@ -18,6 +18,7 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->date('due_date')->nullable();
             $table->string('estimated_time')->nullable();
+            $table->string('status')->default('pending');
             $table->timestamps();
         });
     }

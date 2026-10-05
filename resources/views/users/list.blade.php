@@ -1,69 +1,69 @@
 @extends('layouts.base')
 
 @section('content')
-    <main>
-        <section class="d-flex align-items-center"
-            >
-            <div class="container  py-5">
-                <div class="row justify-content-center">
-                    <div class="col-lg-8">
-                        
-                        <h1 class="display-4 fw-bold mb-4">Users</h1>
-                        <p><a href="{{route("users.create")}}" class="btn btn-info" >+ Add New User</a></p>
-                        <hr>
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Email</th>
-                                    <th>Tasks Assigned</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody id="users-table-body">
-                                <!-- User rows will be dynamically inserted here -->
-                                
-                            </tbody>
-                        </table>
-                    </div>
+<main>
+    <section class="d-flex align-items-center">
+        <div class="container  py-5">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+
+                    <h1 class="display-4 fw-bold mb-4">Users</h1>
+                    <p><a href="{{route("users.create")}}" class="btn btn-info">+ Add New User</a></p>
+                    <hr>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Tasks Assigned</th>
+                                <th>Actions</th><a href=""></a>
+                            </tr>
+                        </thead>
+                        <tbody id="users-table-body">
+                            <!-- User rows will be dynamically inserted here -->
+
+                        </tbody>
+                    </table>
                 </div>
             </div>
-        </section>
-    </main>
+        </div>
+    </section>
+</main>
 @endsection
 
 @section('scripts')
-    <script>
-        $(document).ready(function() {
-            // Fetch users from the API
-            $.ajax({
-                url: '/api/users',
-                method: 'GET',
-                success: function(response) {
-                    var users = response.data;
-                    // Populate the table with user data
-                    const tbody = $('#users-table-body');
-                    tbody.empty(); // Clear existing rows
+<script>
+    $(document).ready(function() {
+        // Fetch users from the API
+        $.ajax({
+            url: '/api/users',
+            method: 'GET',
+            success: function(response) {
+                var users = response.data;
+                // Populate the table with user data
+                const tbody = $('#users-table-body');
+                tbody.empty(); // Clear existing rows
 
-                    users.forEach(user => {
-                        const row = `
+                users.forEach(user => {
+                    const row = `
                             <tr>
                                 <td>${user.name}</td>
                                 <td>${user.email}</td>
-                                <td>${user.num_of_tasks}</td>
+                                <td><a href="/users/${user.id}/tasks" style="text-decoration: none; color: inherit;"> ${user.num_of_tasks}</a></td>
+                                
                                 <td>
                                     <a href="/users/${user.id}/edit" class="btn btn-sm btn-primary">Edit</a>
                                     <a href="/users/${user.id}/delete" class="btn btn-sm btn-danger">Delete</a>
                                 </td>
                             </tr>
                         `;
-                        tbody.append(row);
-                    });
-                },
-                error: function(error) {
-                    console.error('Error fetching users:', error);
-                }
-            });
+                    tbody.append(row);
+                });
+            },
+            error: function(error) {
+                console.error('Error fetching users:', error);
+            }
         });
-    </script>
-    @endsection
+    });
+</script>
+@endsection
