@@ -25,6 +25,7 @@
 
             const title = $('#title').val();
             const user_id = $('#user_id').val();
+            const status = $('#status').val();
             const description = $('#description').val();
             const due_date = $('#due_date').val();
             const estimated_time = $('#estimated_time').val();
@@ -37,7 +38,8 @@
                     description,
                     due_date,
                     user_id,
-                    estimated_time
+                    estimated_time,
+                    status
                 },
                 success: function(response) {
                     alert('Task created successfully!');

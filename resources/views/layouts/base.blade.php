@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Bootstrap Course Starter</title>
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/css/dashboard.css') }}" />
 </head>
 
 <body>
@@ -29,10 +30,6 @@
                         <li class="nav-item">
                             <a class="nav-link {{ Request::is('tasks*') ? 'active' : '' }}" href="{{ route('tasks.list') }}">Tasks</a>
                         </li>
-
-
-
-
 
 
                         <li class="nav-item">
@@ -62,11 +59,11 @@
                                     <h6 class="dropdown-header">Instructor</h6>
                                 </li>
                                 <li><a class="dropdown-item" href="#contact">My Profile</a></li>
-                                <li><a class="dropdown-item" href="#features">Dashboard</a></li>
+                                <li><a class="dropdown-item" href="{{ url('/login') }}">login</a></li>
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
-                                <li><a class="dropdown-item" href="#">Sign Out</a></li>
+                                <li><a class="dropdown-item text-danger" href="#">Sign Out</a></li>
                             </ul>
                         </li>
                     </ul>

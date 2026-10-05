@@ -19,7 +19,7 @@ class UserResource extends JsonResource
             'name' => $this->name,
             'full_name' => $this->name,
             'email' => $this->email,
-            'num_of_tasks' => $this->tasks()->count()
+            'num_of_tasks' => $this->tasks_count,
         ];
     }
 }

@@ -18,6 +18,14 @@
                 </select>
             </div>
             <div class="mb-3">
+                <label for="status" class="form-label">Status</label>
+                <select class="form-select" id="status" name="status">
+                    <option value="pending" {{ old('status', $task->status ?? 'pending') === 'pending' ? 'selected' : '' }}>Pending</option>
+                    <option value="in_progress" {{ old('status', $task->status ?? 'pending') === 'in_progress' ? 'selected' : '' }}>In Progress</option>
+                    <option value="completed" {{ old('status', $task->status ?? 'pending') === 'completed' ? 'selected' : '' }}>Completed</option>
+                </select>
+            </div>
+            <div class="mb-3">
                 <label for="description" class="form-label">Description</label>
                 <textarea class="form-control" id="description" name="description">{{ isset($task) ? $task->description : '' }}</textarea>
             </div>

@@ -10,7 +10,7 @@ use App\Http\Resources\UserResource;
 class UsersController extends Controller
 {
     public function index(){
-        $users = User::with('tasks')->get();
+        $users = User::withCount('tasks')->get();
 
         return UserResource::collection($users);
     }
@@ -38,4 +38,5 @@ class UsersController extends Controller
         $user = User::find($id);
         return UserResource::make($user);   
     }
+
 }
