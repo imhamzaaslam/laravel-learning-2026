@@ -12,10 +12,27 @@ class TasksController extends Controller
 {
     public function index(Request $request)
     {
+        
         $query = Task::with('user');
 
-        if ($request->has('filter') && $request->input('filter') === 'overdue') {
-            $query->where('due_date', '<', now())->where('status', '!=', 'completed');
+        // if ($request->has('filter') && $request->input('filter') === 'overdue') {
+        //     $query->where('due_date', '<', now())->where('status', '!=', 'completed');
+        // }
+
+        if ($request->filled('title')) {
+            $query->where('title', 'like', '%' . $request->input('title') . '%');
+        }
+
+        if ($request->filled('status')) {
+            $query->where('status', $request->input('status'));
+        }
+
+        if ($request->filled('user_id')) {
+            $query->where('user_id', $request->input('user_id'));
+        }
+
+        if ($request->filled('due_date')) {
+            $query->whereDate('due_date', $request->input('due_date'));
         }
 
         $tasks = $query->get();
