@@ -9,8 +9,20 @@ use App\Http\Resources\UserResource;
 
 class UsersController extends Controller
 {
-    public function index(){
-        $users = User::withCount('tasks')->get();
+    public function index(Request $request){
+        $query = User::withCount('tasks');
+
+        $name = trim((string) $request->query('name', ''));
+        if ($name !== '') {
+            $query->where('name', 'like', "%{$name}%");
+        }
+
+        $email = trim((string) $request->query('email', ''));
+        if ($email !== '') {
+            $query->where('email', 'like', "%{$email}%");
+        }
+
+        $users = $query->get();
 
         return UserResource::collection($users);
     }
