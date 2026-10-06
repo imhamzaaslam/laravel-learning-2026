@@ -16,3 +16,5 @@ Route::post('/users', UsersController::class.'@store');
 Route::get('/tasks', TasksController::class.'@index');
 Route::post('/tasks', TasksController::class.'@store');
 Route::delete('/tasks/{id}', TasksController::class.'@destroy');
+
+Route::patch('/tasks/{id}/status', TasksController::class.'@updateStatus');

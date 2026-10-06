@@ -34,4 +34,19 @@ class TaskController extends Controller
         $users = \App\Models\User::orderby('name')->get();
         return view('tasks.edit', compact('task', 'users'));
     }
+
+    public function updateStatus(Request $request, $id){
+        $validated = $request->validate([
+            'status' => 'required|in:pending,in_progress,completed',
+        ]);
+
+        $task = Task::findOrFail($id);
+        $task->update(['status'=> $validated['status'],
+        ]);
+
+        return response()->json([
+            'message' => 'Task status updated successfully',
+            'status'=> $task->status,
+        ]);
+    }
 }
