@@ -28,5 +28,6 @@ Route::get('tasks', TaskController::class . '@taskList')->name('tasks.list');
 Route::get('tasks/create', TaskController::class . '@create')->name('tasks.create');
 Route::get('tasks/{id}', TaskController::class . '@show')->name('tasks.details');
 Route::get('tasks/{id}/edit', TaskController::class . '@edit')->name('tasks.edit');
+Route::get('tasks/{id}/send-assignment-email', TaskController::class . '@sendAssignmentEmail')->name('tasks.send-assignment-email');
 
 Route::get('users/{user}/tasks', UserController::class . '@assignedTasks')->name('users.assigned-tasks');
