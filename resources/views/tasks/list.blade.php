@@ -207,3 +207,5 @@
             }
         });
     });
+</script>
+@endsection

@@ -26,8 +26,8 @@ class TaskController extends Controller
         $task = Task::find($id);
         return view('tasks.details', compact('task'));
     }
-    
-    
+
+
     public function edit($id)
     {
         $task = Task::find($id);
@@ -35,18 +35,20 @@ class TaskController extends Controller
         return view('tasks.edit', compact('task', 'users'));
     }
 
-    public function updateStatus(Request $request, $id){
+    public function updateStatus(Request $request, $id)
+    {
         $validated = $request->validate([
             'status' => 'required|in:pending,in_progress,completed',
         ]);
 
         $task = Task::findOrFail($id);
-        $task->update(['status'=> $validated['status'],
+        $task->update([
+            'status' => $validated['status'],
         ]);
 
         return response()->json([
             'message' => 'Task status updated successfully',
-            'status'=> $task->status,
+            'status' => $task->status,
         ]);
     }
 }
