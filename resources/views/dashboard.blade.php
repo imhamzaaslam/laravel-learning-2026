@@ -6,9 +6,9 @@
     <div class="container">
         <div class="d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-3 mb-4">
             <div>
-                <p class="text-uppercase small fw-bold text-primary mb-2">Workspace</p>
-                <h1 class="dashboard-title mb-2">Task overview</h1>
-                <p class="dashboard-subtitle mb-0">A clear view of your team's current work.</p>
+                
+                <h1 class="dashboard-title mb-2">Welcome {{ auth()->user()?->name }}!</h1>
+                
             </div>
             <a href="{{ route('tasks.create') }}" class="btn btn-primary px-3 py-2">+ Add New Task</a>
         </div>
