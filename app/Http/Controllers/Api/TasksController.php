@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Mail\TaskCompletedMail;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\TaskResource;
 use Illuminate\Http\Request;
@@ -12,7 +13,7 @@ class TasksController extends Controller
 {
     public function index(Request $request)
     {
-        
+
         $query = Task::with('user');
 
         // if ($request->has('filter') && $request->input('filter') === 'overdue') {
@@ -93,6 +94,21 @@ class TasksController extends Controller
         }
 
         return response()->json(['message' => 'Task created successfully']);
+    }
+
+    public function updateStatusValue(Request $request, $id)
+    {
+        $validated = $request->validate([
+            'status' => 'required|in:pending,in_progress,completed',
+        ]);
+
+        $task = Task::findOrFail($id);
+        $task->update(['status' => $validated['status']]);
+
+        return response()->json([
+            'message' => 'Task status updated successfully.',
+            'status' => $task->status,
+        ]);
     }
 
     public function destroy($id)
