@@ -14,6 +14,15 @@ class UsersSeeder extends Seeder
     public function run(): void
     {
         User::truncate();
+
+        User::create([
+            'name' => 'Admin',
+            'email' => 'admin@example.com',
+            'password' => bcrypt('password'),
+            'role' => 'admin'
+        ]);
+
+
         User::create([
             'name' => 'John Doe',
             'email' => 'john@example.com',
