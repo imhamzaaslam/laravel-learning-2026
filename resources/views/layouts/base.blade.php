@@ -13,7 +13,7 @@
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container">
-                <a class="navbar-brand" href="#">Bootstrap Course</a>
+                <a class="navbar-brand" href="#">Project Management System</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                     aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -52,7 +52,7 @@
                             <button class="btn btn-outline-light btn-sm rounded-circle dropdown-toggle" type="button"
                                 id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false"
                                 style="width: 40px; height: 40px; padding: 0;">
-                                <span class="fw-bold">IN</span>
+                                <span class="fw-bold">{{auth()->user()?->name}}</span>
                             </button>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
                                 <li>
@@ -63,7 +63,7 @@
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
-                                <li><a class="dropdown-item text-danger" href="#">Sign Out</a></li>
+                                <li><a class="dropdown-item text-danger" href="{{ route('logout') }}">Sign Out</a></li>
                             </ul>
                         </li>
                     </ul>
