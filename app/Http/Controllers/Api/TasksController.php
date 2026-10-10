@@ -36,6 +36,10 @@ class TasksController extends Controller
             $query->whereDate('due_date', $request->input('due_date'));
         }
 
+        // if($request->user()->role != 'admin') {
+        //     $query->where('user_id', auth()->id());
+        // }
+
         $tasks = $query->get();
         return TaskResource::collection($tasks);
     }

@@ -23,9 +23,11 @@
                         <li class="nav-item">
                             <a class="nav-link {{ Request::is('dashboard') ? 'active' : '' }}" href="{{ route('dashboard') }}">Dashboard</a>
                         </li>
+                        @if(auth()->user()->role === 'admin')
                         <li class="nav-item">
                             <a class="nav-link {{ Request::is('users*') ? 'active' : '' }}" href="{{ route('users.list') }}">Users</a>
                         </li>
+                        @endif
 
                         <li class="nav-item">
                             <a class="nav-link {{ Request::is('tasks*') ? 'active' : '' }}" href="{{ route('tasks.list') }}">Tasks</a>
