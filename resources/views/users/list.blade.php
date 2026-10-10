@@ -11,22 +11,16 @@
                     <p><a href="{{route("users.create")}}" class="btn btn-info">+ Add New User</a></p>
                     <hr>
 
-                    <form id="user-filter-form" class="row g-3 mb-4">
+                    <div class="row">
+                        <form id="user-filter-form" class="col-md-4 g-3 mb-4">
 
-                        <div class="col-md-3">
-                            <label for="filter-name" class="form-label fw-semibold">Name</label>
-                            <input type="text" id="filter-name" name="name" class="form-control" placeholder="Search by Name...">
-                        </div>
-                        <div class="col-md-3">
-                            <label for="filter-email" class="form-label fw-semibold">Email</label>
-                            <input type="text" id="filter-email" name="email" class="form-control" placeholder="Search by Email...">
-                        </div>
-                        <div class="col-6 gap-2 mt-5">
+                            <input type="text" id="search-bar" placeholder="Search by name or email..." class="form-control">
+                        </form>
+                        <div class="col-md-6 mt-3">
                             <button type="submit" class="btn btn-primary">Filter</button>
                             <a href="{{ request()->url() }}" class="btn btn-outline-secondary">Reset</a>
                         </div>
-
-                    </form>
+                    </div>
                     <table class="table table-striped">
                         <thead>
                             <tr>
@@ -93,8 +87,7 @@
             event.preventDefault();
 
             const params = {
-                name: $('#filter-name').val().trim(),
-                email: $('#filter-email').val().trim()
+                search: $('#search-bar').val().trim()
             };
 
             fetchUsers(params);

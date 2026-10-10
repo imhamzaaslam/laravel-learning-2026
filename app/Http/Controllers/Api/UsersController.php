@@ -12,6 +12,14 @@ class UsersController extends Controller
     public function index(Request $request){
         $query = User::withCount('tasks');
 
+        $search = trim((string) $request->query('search', ''));
+        if ($search !== '') {
+            $query->where(function ($query) use ($search) {
+                $query->where('name', 'like', "%{$search}%")
+                    ->orWhere('email', 'like', "%{$search}%");
+            });
+        }
+
         $name = trim((string) $request->query('name', ''));
         if ($name !== '') {
             $query->where('name', 'like', "%{$name}%");
