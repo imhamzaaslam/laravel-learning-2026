@@ -38,7 +38,8 @@ class UsersSeeder extends Seeder
         User::create([
             'name' => 'Eric',
             'email' => 'eric@example.com',
-            'password' => bcrypt('password')
+            'password' => bcrypt('password'),
+            'role' => 'user'
         ]);
     }
 }
