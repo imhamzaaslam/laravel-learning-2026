@@ -10,11 +10,13 @@ use Illuminate\Support\Facades\Route;
 // })->middleware('auth:sanctum');
 
 
-Route::get('/users', UsersController::class.'@index');
-Route::post('/users', UsersController::class.'@store');
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('/users', UsersController::class . '@index');
+    Route::post('/users', UsersController::class . '@store');
 
-Route::get('/tasks', TasksController::class.'@index');
-Route::post('/tasks', TasksController::class.'@store');
-Route::delete('/tasks/{id}', TasksController::class.'@destroy');
+    Route::get('/tasks', TasksController::class . '@index');
+    Route::post('/tasks', TasksController::class . '@store');
+    Route::delete('/tasks/{id}', TasksController::class . '@destroy');
 
-Route::patch('/tasks/{id}/status', TasksController::class . '@updateStatusValue');
+    Route::patch('/tasks/{id}/status', TasksController::class . '@updateStatusValue');
+});

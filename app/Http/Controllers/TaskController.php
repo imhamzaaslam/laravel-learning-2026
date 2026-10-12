@@ -7,12 +7,14 @@ use App\Models\Task;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use App\Policies\TaskPolicy;
 
 class TaskController extends Controller
 {
     public function taskList()
     {
 
+        //$this->authorize('list', Task::class);
 
         return view('tasks.list');
     }
@@ -25,13 +27,16 @@ class TaskController extends Controller
 
     public function show($id)
     {
-        $task = Task::find($id);
+        $user = auth()->user();
+        $this->authorize('view', Task::findOrFail($id));
         return view('tasks.details', compact('task'));
     }
 
 
     public function edit($id)
     {
+        $user = auth()->user();
+        $this->authorize('view', Task::findOrFail($id));
         $task = Task::find($id);
         $users = \App\Models\User::orderby('name')->get();
         return view('tasks.edit', compact('task', 'users'));
