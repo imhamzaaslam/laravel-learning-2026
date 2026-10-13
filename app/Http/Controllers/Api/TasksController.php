@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Events\TaskCreated;
 use App\Mail\TaskCompletedMail;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\TaskStoreRequest;
 use App\Http\Resources\TaskResource;
 use Illuminate\Http\Request;
 use App\Models\Task;
@@ -36,7 +38,7 @@ class TasksController extends Controller
             $query->whereDate('due_date', $request->input('due_date'));
         }
 
-        if(auth()->user()->role != 'admin') {
+        if (auth()->user()->role != 'admin') {
             $query->where('user_id', auth()->id());
         }
 
@@ -44,20 +46,8 @@ class TasksController extends Controller
         return TaskResource::collection($tasks);
     }
 
-    public function store(Request $request)
+    public function store(TaskStoreRequest $request)
     {
-
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'user_id' => 'nullable|integer|exists:users,id',
-            'status' => 'sometimes|required|in:pending,in_progress,completed',
-            'description' => 'nullable|string',
-            'due_date' => 'nullable|date',
-            'estimated_time' => 'nullable|string|max:255',
-            'attachments' => 'nullable|array',
-            'attachments.*' => 'file|max:2048|mimes:jpg,jpeg,png,pdf,doc,docx,xls,xlsx',
-        ]);
-
         $taskRequestData = [
             'title' => $request->title,
             'user_id' => $request->user_id,
@@ -77,6 +67,8 @@ class TasksController extends Controller
         } else {
             $taskRequestData['uuid'] = Str::uuid();
             $task = Task::create($taskRequestData);
+
+            event(new TaskCreated($task));
         }
 
         // Handle attachments if provided
