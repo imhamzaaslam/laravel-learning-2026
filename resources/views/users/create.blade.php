@@ -30,6 +30,10 @@
                                 <input type="password" class="form-control" id="confirm_password" name="confirm_password" >
                             </div>
 
+                            <div class="mb-3 form-check">
+                                <input type="checkbox" class="form-check-input" id="send_details" name="send_details">
+                                <label for="send_details" class="form-check-label">Send details to User</label>
+                            </div>
 
                             <button type="submit" class="btn btn-primary">Create User</button>
 
@@ -56,15 +60,21 @@
             const email = $('#email').val();
             const password = $('#password').val();
             const confirm_password = $('#confirm_password').val();
+            const send_details = $('#send_details').is(':checked');
 
             $.ajax({
                 url: '/api/users',
                 method: 'POST',
+                // Include CSRF token in the request header
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
                 data: {
                     name,
-                    email, 
+                    email,
                     password,
-                    confirm_password
+                    confirm_password,
+                    send_details
                 },
                 success: function(response) {
                     alert('User created successfully!');

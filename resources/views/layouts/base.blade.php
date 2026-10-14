@@ -7,6 +7,7 @@
     <title>Bootstrap Course Starter</title>
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/css/dashboard.css') }}" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 
 <body>

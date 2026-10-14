@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Http\Resources\UserResource;
+use App\Events\UserCreated;
 
 class UsersController extends Controller
 {
@@ -26,11 +27,16 @@ class UsersController extends Controller
         $name = $request->name;
         $email = $request->email;
         $password = $request->password;
-        User::create([
+        $user = User::create([
             'name' => $name,
             'email' => $email,
             'password' => $password
         ]);
+
+        if ($request->boolean('send_details')) {
+            event(new UserCreated($user, $password));
+        }
+
         return response()->json(['message' => 'User created successfully']);
     }
 
